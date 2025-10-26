@@ -18,3 +18,14 @@ models:
 
   - name: fact_sales
     description: Sales fact table
+
+  - name: stg_employee_certifications
+    description: |
+      Staging model for employee certifications.
+      Each record represents a certification an employee completed.
+      
+  - name: fact_certification
+    description: |
+      Employee Certification Fact.
+      The grain of this table is employee + certification + date
+      Each record represents a certification completed by an employee.
