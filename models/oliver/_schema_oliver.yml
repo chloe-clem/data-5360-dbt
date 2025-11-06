@@ -3,9 +3,23 @@ version: 2
 models:
   - name: oliver_dim_customer
     description: Customer dimension table
+    columns:
+      - name: cust_key
+        tests:
+          - unique
 
   - name: oliver_dim_product
     description: Product dimension table
+    columns:
+      - name: product_name
+        tests:
+          - accepted_values:
+              values:
+                - "Marshmallows"
+                - "Small Popcorn"
+                - "Gummy Bears"
+                - "Small Coffee"
+                - "Chocolate Bar"
 
   - name: oliver_dim_employee
     description: Employee dimension table
@@ -18,6 +32,11 @@ models:
 
   - name: fact_sales
     description: Sales fact table
+    columns:
+      - name: cust_key
+        description: "A foreign key to the customer dimension"
+        tests:
+          - not_null
 
   - name: stg_employee_certifications
     description: |
@@ -29,3 +48,9 @@ models:
       Employee Certification Fact.
       The grain of this table is employee + certification + date
       Each record represents a certification completed by an employee.
+    columns:
+      - name: employee_key
+        tests:
+          - relationships:
+              to: ref('oliver_dim_employee') # the model you want to compare to
+              field: employee_key # the field on the model you want to compare to
